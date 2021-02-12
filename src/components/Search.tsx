@@ -13,9 +13,7 @@ const Search = () => {
     setText(e.target.value);
   };
 
-  const onSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-
+  const getPokemonList = async () => {
     const response = await axios.get(
       `https://pokeapi.co/api/v2/pokemon/${text}`
     );
@@ -24,9 +22,13 @@ const Search = () => {
     setPokemonList(data);
   };
 
-  useEffect(() => {
-    console.log(pokemonList);
-  }, [pokemonList]);
+  const onSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    getPokemonList();
+  };
+
+  console.log(pokemonList);
 
   return (
     <Container>
@@ -49,7 +51,7 @@ const Search = () => {
           Search
         </Button>
       </Form>
-      <PokemonList />
+      <PokemonList pokemonList={pokemonList} getPokemonList={getPokemonList} />
     </Container>
   );
 };
